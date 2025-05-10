@@ -5,6 +5,7 @@ import Dashboard from "@/pages/dashboard";
 import CreateFlashcard from "@/pages/create-flashcard";
 import Study from "@/pages/study";
 import AIGenerator from "@/pages/ai-generator";
+import Settings from "@/pages/settings";
 import NotFound from "@/pages/not-found";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path="/create-flashcard" component={CreateFlashcard} />
         <Route path="/study/:id" component={Study} />
         <Route path="/ai-generator" component={AIGenerator} />
+        <Route path="/settings" component={Settings} />
         <Route component={NotFound} />
       </Switch>
     </TooltipProvider>

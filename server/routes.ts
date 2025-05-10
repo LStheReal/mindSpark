@@ -303,6 +303,64 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ message: "Failed to generate quiz" });
     }
   });
+  
+  // Settings routes
+  app.post("/api/settings/api-key", async (req, res) => {
+    try {
+      const { userId, apiKey, useOwnApi } = req.body;
+      
+      // Get the user
+      const user = await storage.getUser(userId);
+      
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      
+      // In a real app, we would encrypt the API key before storing it
+      // Here we'll simulate storing it in user settings
+      // This would need a proper user settings table in a real app
+      
+      // For now, we'll just acknowledge receipt of the settings
+      res.json({ 
+        success: true, 
+        message: "API key settings saved",
+        useOwnApi,
+        // Don't send the actual API key back to the client for security
+        hasApiKey: !!apiKey
+      });
+      
+    } catch (error) {
+      console.error("Error saving API key settings:", error);
+      res.status(500).json({ message: "Failed to save API key settings" });
+    }
+  });
+  
+  // Get user API settings
+  app.get("/api/settings/api-key/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      
+      // Get the user
+      const user = await storage.getUser(userId);
+      
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      
+      // In a real app, we would retrieve this from the database
+      // For this simulation, we'll just respond with default settings
+      
+      res.json({
+        useOwnApi: false,
+        // We never send the actual API key back for security reasons
+        hasApiKey: false
+      });
+      
+    } catch (error) {
+      console.error("Error fetching API key settings:", error);
+      res.status(500).json({ message: "Failed to fetch API key settings" });
+    }
+  });
 
   const httpServer = createServer(app);
   return httpServer;

@@ -2,10 +2,21 @@
 import OpenAI from "openai";
 import { Flashcard } from "@shared/schema";
 
-// Initialize OpenAI with the API key
-const openai = new OpenAI({
+// Initialize OpenAI with default API key
+// This will be used as fallback when user doesn't have their own key
+const defaultOpenAI = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
+
+// Function to get OpenAI instance based on user's API key
+function getOpenAIInstance(userApiKey?: string) {
+  if (userApiKey) {
+    return new OpenAI({
+      apiKey: userApiKey,
+    });
+  }
+  return defaultOpenAI;
+};
 
 // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
 const MODEL = "gpt-4o";
