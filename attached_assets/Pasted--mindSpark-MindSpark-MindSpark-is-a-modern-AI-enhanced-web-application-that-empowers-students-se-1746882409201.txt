@@ -1,0 +1,90 @@
+# mindSpark
+
+MindSpark
+MindSpark is a modern, AI-enhanced web application that empowers students, self-learners, and teachers to study, create, and share flashcards and quizzes—built with the performance of Quizlet and supercharged with artificial intelligence.
+
+🎯 Core Purpose
+To help users learn faster and smarter through automated flashcard generation, intelligent quizzes, classroom sharing, and engaging study tools—all in a clean, mobile-friendly UI.
+
+🔑 Key Features
+1. Flashcard Creation
+Users can manually create flashcards (question + answer format).
+
+Flashcards can be grouped into Sets, categorized by subject or tags.
+
+Flashcards support images, text, and markdown-style formatting.
+
+2. AI-Powered Flashcard Generation
+From Images:
+
+Upload a photo or screenshot (e.g., from a textbook).
+
+AI uses OCR (e.g., Tesseract.js or Google Vision) to extract terms and definitions.
+
+Automatically converts them into flashcards.
+
+From Text, PDFs, or Notes:
+
+Paste study notes or upload documents.
+
+AI (via OpenAI GPT-4) identifies important concepts.
+
+Returns flashcards in Q/A format with high-quality phrasing.
+
+3. Study Mode
+Flip-style flashcards (front/back) with animations.
+
+Shuffle, mark as “known/unknown,” and track progress.
+
+Clean UI similar to Quizlet, optimized for mobile and desktop.
+
+4. AI-Generated Quizzes
+From any flashcard set, users can generate:
+
+Multiple choice questions (MCQs)
+
+Fill-in-the-blank exercises
+
+OpenAI crafts high-quality distractors and feedback.
+
+Results are saved in user history.
+
+5. Smart Review (Spaced Repetition)
+Flashcards adapt to user learning behavior.
+
+Cards marked “hard” reappear more often.
+
+Optionally AI-curated review schedules.
+
+6. Classrooms & Collaboration
+Users can create or join Classrooms.
+
+Share flashcard sets with classmates.
+
+Compete via quiz challenges or collaborative study sessions.
+
+🎨 Design & Experience
+Look & Feel: Inspired by Quizlet, flat and modern
+
+Brand Colors:
+
+Electric Blue: #3B82F6
+
+Violet: #8B5CF6
+
+Soft White: #F9FAFB
+
+Neon Yellow: for spark elements
+
+Typography: Inter / Poppins / Montserrat (bold sans-serif)
+
+UI Stack: React (Vite), styled using Tailwind CSS
+
+🌐 Domain & Identity
+Name: MindSpark
+
+Domain: mindspark.study
+
+Logo Concept: Brain + Lightning Bolt icon, paired with flashcard/code motif
+
+Target Group: Teenagers (12–20 years), students, and adult learners
