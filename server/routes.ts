@@ -213,6 +213,41 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ message: "Failed to update study progress" });
     }
   });
+  
+  // Schedule next study session
+  app.post("/api/flashcard-sets/:id/schedule", async (req, res) => {
+    try {
+      const setId = parseInt(req.params.id);
+      const { nextReviewDate } = req.body;
+      
+      // Get default user
+      const user = await storage.getUserByUsername("testuser");
+      
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      
+      // Get the flashcard set
+      const set = await storage.getFlashcardSet(setId);
+      
+      if (!set) {
+        return res.status(404).json({ message: "Flashcard set not found" });
+      }
+      
+      // In a real app, we would store the scheduled date in the database
+      // For now, we'll just log it and return a success message
+      console.log(`Scheduled flashcard set ${setId} for review on ${nextReviewDate}`);
+      
+      res.json({ 
+        message: "Study session scheduled successfully",
+        setId,
+        nextReviewDate
+      });
+    } catch (error) {
+      console.error("Error scheduling study session:", error);
+      res.status(500).json({ message: "Failed to schedule study session" });
+    }
+  });
 
   // AI Routes
   app.post("/api/ai/generate-flashcards", async (req, res) => {

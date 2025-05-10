@@ -26,13 +26,13 @@ export default function Study() {
   const [sessionCompleted, setSessionCompleted] = useState(false);
   
   // Fetch flashcard set details
-  const { data: flashcardSet, isLoading: setLoading } = useQuery({
+  const { data: flashcardSet, isLoading: setLoading } = useQuery<any>({
     queryKey: [`/api/flashcard-sets/${params.id}`],
     enabled: !!params.id && isAuthenticated,
   });
   
   // Fetch flashcards for the set
-  const { data: flashcards, isLoading: cardsLoading } = useQuery({
+  const { data: flashcards, isLoading: cardsLoading } = useQuery<FlashcardType[]>({
     queryKey: [`/api/flashcard-sets/${params.id}/flashcards`],
     enabled: !!params.id && isAuthenticated,
   });
@@ -46,7 +46,7 @@ export default function Study() {
   }, [flashcards]);
   
   const shuffleCards = () => {
-    if (!flashcards) return;
+    if (!flashcards || !Array.isArray(flashcards) || flashcards.length === 0) return;
     
     // Create a copy of the flashcards array and shuffle it
     const shuffled = [...flashcards].sort(() => Math.random() - 0.5);
@@ -199,8 +199,8 @@ export default function Study() {
           </div>
           
           <Card className="bg-white shadow-md p-6 mb-6">
-            <h1 className="text-2xl font-bold mb-2">{flashcardSet.title}</h1>
-            {flashcardSet.description && (
+            <h1 className="text-2xl font-bold mb-2">{flashcardSet?.title || "Study Session"}</h1>
+            {flashcardSet?.description && (
               <p className="text-[#4B5563] mb-4">{flashcardSet.description}</p>
             )}
             
@@ -252,7 +252,7 @@ export default function Study() {
               </Card>
               
               <SpacedRepetitionScheduler
-                flashcardSet={flashcardSet}
+                flashcardSet={flashcardSet || { id: parseInt(params.id || '0'), title: "Study Session" } as any}
                 knownCards={knownCards.length}
                 unknownCards={unknownCards.length}
                 onScheduleNext={handleScheduleNext}
