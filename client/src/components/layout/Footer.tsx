@@ -33,30 +33,30 @@ export default function Footer() {
             <div>
               <h3 className="font-bold text-lg mb-4">Product</h3>
               <ul className="space-y-2">
-                <li><Link href="/features"><a className="text-white/70 hover:text-white transition-colors">Features</a></Link></li>
-                <li><Link href="/pricing"><a className="text-white/70 hover:text-white transition-colors">Pricing</a></Link></li>
-                <li><Link href="/for-teachers"><a className="text-white/70 hover:text-white transition-colors">For Teachers</a></Link></li>
-                <li><Link href="/for-students"><a className="text-white/70 hover:text-white transition-colors">For Students</a></Link></li>
+                <li><Link href="/features" className="text-white/70 hover:text-white transition-colors">Features</Link></li>
+                <li><Link href="/pricing" className="text-white/70 hover:text-white transition-colors">Pricing</Link></li>
+                <li><Link href="/for-teachers" className="text-white/70 hover:text-white transition-colors">For Teachers</Link></li>
+                <li><Link href="/for-students" className="text-white/70 hover:text-white transition-colors">For Students</Link></li>
               </ul>
             </div>
             
             <div>
               <h3 className="font-bold text-lg mb-4">Resources</h3>
               <ul className="space-y-2">
-                <li><Link href="/help"><a className="text-white/70 hover:text-white transition-colors">Help Center</a></Link></li>
-                <li><Link href="/blog"><a className="text-white/70 hover:text-white transition-colors">Blog</a></Link></li>
-                <li><Link href="/tutorials"><a className="text-white/70 hover:text-white transition-colors">Tutorials</a></Link></li>
-                <li><Link href="/api-docs"><a className="text-white/70 hover:text-white transition-colors">API</a></Link></li>
+                <li><Link href="/help" className="text-white/70 hover:text-white transition-colors">Help Center</Link></li>
+                <li><Link href="/blog" className="text-white/70 hover:text-white transition-colors">Blog</Link></li>
+                <li><Link href="/tutorials" className="text-white/70 hover:text-white transition-colors">Tutorials</Link></li>
+                <li><Link href="/api-docs" className="text-white/70 hover:text-white transition-colors">API</Link></li>
               </ul>
             </div>
             
             <div>
               <h3 className="font-bold text-lg mb-4">Company</h3>
               <ul className="space-y-2">
-                <li><Link href="/about"><a className="text-white/70 hover:text-white transition-colors">About Us</a></Link></li>
-                <li><Link href="/careers"><a className="text-white/70 hover:text-white transition-colors">Careers</a></Link></li>
-                <li><Link href="/privacy"><a className="text-white/70 hover:text-white transition-colors">Privacy</a></Link></li>
-                <li><Link href="/terms"><a className="text-white/70 hover:text-white transition-colors">Terms</a></Link></li>
+                <li><Link href="/about" className="text-white/70 hover:text-white transition-colors">About Us</Link></li>
+                <li><Link href="/careers" className="text-white/70 hover:text-white transition-colors">Careers</Link></li>
+                <li><Link href="/privacy" className="text-white/70 hover:text-white transition-colors">Privacy</Link></li>
+                <li><Link href="/terms" className="text-white/70 hover:text-white transition-colors">Terms</Link></li>
               </ul>
             </div>
           </div>
@@ -66,8 +66,8 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-white/70">&copy; {new Date().getFullYear()} MindSpark. All rights reserved.</p>
             <div className="mt-4 md:mt-0">
-              <Link href="/privacy"><a className="text-white/70 hover:text-white transition-colors mr-4">Privacy Policy</a></Link>
-              <Link href="/terms"><a className="text-white/70 hover:text-white transition-colors">Terms of Service</a></Link>
+              <Link href="/privacy" className="text-white/70 hover:text-white transition-colors mr-4">Privacy Policy</Link>
+              <Link href="/terms" className="text-white/70 hover:text-white transition-colors">Terms of Service</Link>
             </div>
           </div>
         </div>
