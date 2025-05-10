@@ -23,7 +23,8 @@ const MODEL = "gpt-4o";
 
 export async function generateFlashcardsFromText(
   content: string,
-  subject: string
+  subject: string,
+  userApiKey?: string
 ): Promise<{ question: string; answer: string }[]> {
   console.log(`Generating flashcards for subject: ${subject}`);
   
@@ -47,7 +48,10 @@ export async function generateFlashcardsFromText(
       ]
     `;
 
-    const response = await openai.chat.completions.create({
+    // Get the appropriate OpenAI instance
+    const openaiInstance = getOpenAIInstance(userApiKey);
+    
+    const response = await openaiInstance.chat.completions.create({
       model: MODEL,
       messages: [{ role: "user", content: prompt }],
       response_format: { type: "json_object" },
@@ -86,7 +90,8 @@ export async function generateFlashcardsFromText(
 export async function generateQuizFromFlashcards(
   flashcards: Flashcard[],
   quizType: string,
-  questionCount: number
+  questionCount: number,
+  userApiKey?: string
 ): Promise<any[]> {
   console.log(`Generating ${quizType} quiz with ${questionCount} questions`);
   
@@ -150,7 +155,10 @@ export async function generateQuizFromFlashcards(
       Ensure the quiz covers the most important concepts from the flashcards.
     `;
 
-    const response = await openai.chat.completions.create({
+    // Get the appropriate OpenAI instance
+    const openaiInstance = getOpenAIInstance(userApiKey);
+    
+    const response = await openaiInstance.chat.completions.create({
       model: MODEL,
       messages: [{ role: "user", content: prompt }],
       response_format: { type: "json_object" },

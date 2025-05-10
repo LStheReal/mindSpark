@@ -217,17 +217,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // AI Routes
   app.post("/api/ai/generate-flashcards", async (req, res) => {
     try {
-      const { content, subject } = req.body;
+      const { content, subject, userId } = req.body;
       
-      // Get default user (in a real app, this would be the authenticated user)
-      const user = await storage.getUserByUsername("testuser");
+      // Get user (in a real app, this would be the authenticated user)
+      const user = userId ? await storage.getUser(userId) : await storage.getUserByUsername("testuser");
       
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }
       
+      // In a real app, we would retrieve the user's API key from a secure storage
+      // For this simulation, we'll check if they have a stored API key preference
+      // We would use the value securely stored in the database
+      
+      // This would be a call to retrieve API settings for user in a real app
+      // const apiSettings = await storage.getUserApiSettings(user.id);
+      // const userApiKey = apiSettings?.useOwnApi ? apiSettings.apiKey : undefined;
+      
+      // For now, there's no implementation for storing API keys, so we'll use the default
+      const userApiKey = undefined;
+      
       // Generate flashcards using OpenAI
-      const generatedCards = await generateFlashcardsFromText(content, subject);
+      const generatedCards = await generateFlashcardsFromText(content, subject, userApiKey);
       
       // Create a flashcard set
       const set = await storage.createFlashcardSet({
@@ -262,10 +273,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/ai/generate-quiz", async (req, res) => {
     try {
-      const { setId, quizType, questionCount } = req.body;
+      const { setId, quizType, questionCount, userId } = req.body;
       
-      // Get default user
-      const user = await storage.getUserByUsername("testuser");
+      // Get user
+      const user = userId ? await storage.getUser(userId) : await storage.getUserByUsername("testuser");
       
       if (!user) {
         return res.status(404).json({ message: "User not found" });
@@ -281,11 +292,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Get the flashcards
       const flashcards = await storage.getFlashcardsBySetId(parseInt(setId));
       
+      // In a real app, we would retrieve the user's API key from a secure storage
+      // For this simulation, we'll check if they have a stored API key preference
+      // We would use the value securely stored in the database
+      
+      // This would be a call to retrieve API settings for user in a real app
+      // const apiSettings = await storage.getUserApiSettings(user.id);
+      // const userApiKey = apiSettings?.useOwnApi ? apiSettings.apiKey : undefined;
+      
+      // For now, there's no implementation for storing API keys, so we'll use the default
+      const userApiKey = undefined;
+      
       // Generate quiz using OpenAI
       const quiz = await generateQuizFromFlashcards(
         flashcards, 
         quizType, 
-        Math.min(questionCount, flashcards.length)
+        Math.min(questionCount, flashcards.length),
+        userApiKey
       );
       
       // Create the quiz

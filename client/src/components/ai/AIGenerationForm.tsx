@@ -84,7 +84,10 @@ export default function AIGenerationForm({ flashcardSets = [], type, onSuccess }
       const response = await apiRequest(
         "POST", 
         "/api/ai/generate-flashcards", 
-        values
+        {
+          ...values,
+          userId: 1 // In a real app, this would be the user's ID from auth
+        }
       );
       
       const data = await response.json();
@@ -110,7 +113,10 @@ export default function AIGenerationForm({ flashcardSets = [], type, onSuccess }
       const response = await apiRequest(
         "POST", 
         "/api/ai/generate-quiz", 
-        values
+        {
+          ...values,
+          userId: 1 // In a real app, this would be the user's ID from auth
+        }
       );
       
       const data = await response.json();
