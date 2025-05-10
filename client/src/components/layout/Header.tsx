@@ -18,36 +18,38 @@ export default function Header() {
     <header className="sticky top-0 z-50 bg-white header-shadow">
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         <div className="flex items-center space-x-2">
-          <Link href="/">
-            <a className="flex items-center">
-              <div className="text-3xl font-bold">
-                <i className="fas fa-bolt text-[#FAFF00] mr-1"></i>
-                <span className="gradient-text">MindSpark</span>
-              </div>
-            </a>
+          <Link href="/" className="flex items-center">
+            <div className="text-3xl font-bold">
+              <i className="fas fa-bolt text-[#FAFF00] mr-1"></i>
+              <span className="gradient-text">MindSpark</span>
+            </div>
           </Link>
         </div>
         
         <div className="hidden md:flex items-center space-x-6">
-          <Link href="/">
-            <a className={`${location === '/' ? 'text-[#3B82F6]' : 'text-[#4B5563]'} hover:text-[#3B82F6] transition-colors font-medium`}>
-              Home
-            </a>
+          <Link 
+            href="/" 
+            className={`${location === '/' ? 'text-[#3B82F6]' : 'text-[#4B5563]'} hover:text-[#3B82F6] transition-colors font-medium`}
+          >
+            Home
           </Link>
-          <Link href="/dashboard">
-            <a className={`${location === '/dashboard' ? 'text-[#3B82F6]' : 'text-[#4B5563]'} hover:text-[#3B82F6] transition-colors font-medium`}>
-              My Library
-            </a>
+          <Link 
+            href="/dashboard" 
+            className={`${location === '/dashboard' ? 'text-[#3B82F6]' : 'text-[#4B5563]'} hover:text-[#3B82F6] transition-colors font-medium`}
+          >
+            My Library
           </Link>
-          <Link href="/classrooms">
-            <a className={`${location === '/classrooms' ? 'text-[#3B82F6]' : 'text-[#4B5563]'} hover:text-[#3B82F6] transition-colors font-medium`}>
-              Classrooms
-            </a>
+          <Link 
+            href="/classrooms" 
+            className={`${location === '/classrooms' ? 'text-[#3B82F6]' : 'text-[#4B5563]'} hover:text-[#3B82F6] transition-colors font-medium`}
+          >
+            Classrooms
           </Link>
-          <Link href="/explore">
-            <a className={`${location === '/explore' ? 'text-[#3B82F6]' : 'text-[#4B5563]'} hover:text-[#3B82F6] transition-colors font-medium`}>
-              Explore
-            </a>
+          <Link 
+            href="/explore" 
+            className={`${location === '/explore' ? 'text-[#3B82F6]' : 'text-[#4B5563]'} hover:text-[#3B82F6] transition-colors font-medium`}
+          >
+            Explore
           </Link>
         </div>
         
@@ -68,17 +70,17 @@ export default function Header() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem>
-                  <Link href="/profile">
-                    <a className="w-full">Profile</a>
+                <DropdownMenuItem asChild>
+                  <Link href="/profile" className="w-full">
+                    Profile
                   </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Link href="/settings">
-                    <a className="w-full">Settings</a>
+                <DropdownMenuItem asChild>
+                  <Link href="/settings" className="w-full">
+                    Settings
                   </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem asChild>
                   <a href="/api/logout" className="w-full">Log Out</a>
                 </DropdownMenuItem>
               </DropdownMenuContent>
