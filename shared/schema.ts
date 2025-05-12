@@ -1,16 +1,31 @@
-import { pgTable, text, serial, integer, boolean, timestamp, json } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, boolean, timestamp, json, varchar, jsonb, index } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
+// Session storage table required for Replit Auth
+export const sessions = pgTable(
+  "sessions",
+  {
+    sid: varchar("sid").primaryKey(),
+    sess: jsonb("sess").notNull(),
+    expire: timestamp("expire").notNull(),
+  },
+  (table) => [index("IDX_session_expire").on(table.expire)],
+);
+
 export const users = pgTable("users", {
-  id: serial("id").primaryKey(),
-  username: text("username").notNull().unique(),
-  password: text("password").notNull(),
+  id: varchar("id").primaryKey(), // Use Replit's user ID as our primary key
+  username: text("username"),
   email: text("email"),
   firstName: text("first_name"),
   lastName: text("last_name"),
-  profileImage: text("profile_image"),
+  profileImageUrl: text("profile_image_url"),
+  userPlan: text("user_plan").default("free").notNull(), // "free", "pro" (own API key), or "premium" (subscription)
+  apiKey: text("api_key"), // User's OpenAI API key (encrypted in production)
+  stripeCustomerId: text("stripe_customer_id"), // For premium subscriptions
+  stripeSubscriptionId: text("stripe_subscription_id"), // For premium subscriptions
   createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
 });
 
 export const categories = pgTable("categories", {
@@ -96,12 +111,16 @@ export const quizResults = pgTable("quiz_results", {
 
 // Insert schemas
 export const insertUserSchema = createInsertSchema(users).pick({
+  id: true,
   username: true,
-  password: true,
   email: true,
   firstName: true,
   lastName: true,
-  profileImage: true,
+  profileImageUrl: true,
+  userPlan: true,
+  apiKey: true,
+  stripeCustomerId: true,
+  stripeSubscriptionId: true,
 });
 
 export const insertCategorySchema = createInsertSchema(categories).pick({
