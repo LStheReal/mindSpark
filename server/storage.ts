@@ -21,12 +21,12 @@ export interface IStorage {
   
   // Category operations
   getCategories(): Promise<Category[]>;
-  getCategoriesByUserId(userId: number): Promise<Category[]>;
+  getCategoriesByUserId(userId: string): Promise<Category[]>;
   createCategory(category: InsertCategory): Promise<Category>;
   
   // Flashcard set operations
   getFlashcardSets(): Promise<FlashcardSet[]>;
-  getFlashcardSetsByUserId(userId: number): Promise<FlashcardSet[]>;
+  getFlashcardSetsByUserId(userId: string): Promise<FlashcardSet[]>;
   getFlashcardSetsByCategoryId(categoryId: number): Promise<FlashcardSet[]>;
   getFlashcardSet(id: number): Promise<FlashcardSet | undefined>;
   createFlashcardSet(set: InsertFlashcardSet): Promise<FlashcardSet>;
@@ -41,14 +41,14 @@ export interface IStorage {
   deleteFlashcard(id: number): Promise<void>;
   
   // Study progress operations
-  getStudyProgressByUserId(userId: number): Promise<StudyProgress[]>;
+  getStudyProgressByUserId(userId: string): Promise<StudyProgress[]>;
   getStudyProgressByFlashcardId(flashcardId: number): Promise<StudyProgress | undefined>;
   createStudyProgress(progress: InsertStudyProgress): Promise<StudyProgress>;
   updateStudyProgress(id: number, progress: Partial<StudyProgress>): Promise<StudyProgress>;
   
   // Classroom operations
   getClassrooms(): Promise<Classroom[]>;
-  getClassroomsByUserId(userId: number): Promise<Classroom[]>;
+  getClassroomsByUserId(userId: string): Promise<Classroom[]>;
   createClassroom(classroom: InsertClassroom): Promise<Classroom>;
   getClassroomMembers(classroomId: number): Promise<ClassroomMember[]>;
   addClassroomMember(member: InsertClassroomMember): Promise<ClassroomMember>;
@@ -59,12 +59,12 @@ export interface IStorage {
   
   // Quiz operations
   createQuiz(quiz: InsertQuiz): Promise<Quiz>;
-  getQuizzesByUserId(userId: number): Promise<Quiz[]>;
+  getQuizzesByUserId(userId: string): Promise<Quiz[]>;
   getQuiz(id: number): Promise<Quiz | undefined>;
   
   // Quiz results operations
   createQuizResult(result: InsertQuizResult): Promise<QuizResult>;
-  getQuizResultsByUserId(userId: number): Promise<QuizResult[]>;
+  getQuizResultsByUserId(userId: string): Promise<QuizResult[]>;
   
   // Recent studies operations
   getRecentStudies(): Promise<any[]>;
@@ -72,7 +72,7 @@ export interface IStorage {
 }
 
 export class MemStorage implements IStorage {
-  private users: Map<number, User>;
+  private users: Map<string, User>;
   private categories: Map<number, Category>;
   private flashcardSets: Map<number, FlashcardSet>;
   private flashcards: Map<number, Flashcard>;
@@ -121,7 +121,7 @@ export class MemStorage implements IStorage {
   }
 
   // User operations
-  async getUser(id: number): Promise<User | undefined> {
+  async getUser(id: string): Promise<User | undefined> {
     return this.users.get(id);
   }
 
@@ -130,14 +130,40 @@ export class MemStorage implements IStorage {
   }
 
   async createUser(user: InsertUser): Promise<User> {
-    const id = this.userIdCounter++;
+    // Since we're using string IDs now, make sure we have one
+    if (!user.id) {
+      // Generate a unique string ID if needed (in real app, this would be the Replit ID)
+      user.id = `user-${this.userIdCounter++}`;
+    }
+    
     const newUser: User = {
       ...user,
-      id,
-      createdAt: new Date()
+      createdAt: new Date(),
+      updatedAt: new Date()
     };
-    this.users.set(id, newUser);
+    
+    this.users.set(newUser.id, newUser);
     return newUser;
+  }
+  
+  async upsertUser(user: InsertUser): Promise<User> {
+    // Check if user already exists
+    const existingUser = await this.getUser(user.id);
+    
+    if (existingUser) {
+      // Update existing user
+      const updatedUser: User = {
+        ...existingUser,
+        ...user,
+        updatedAt: new Date()
+      };
+      
+      this.users.set(updatedUser.id, updatedUser);
+      return updatedUser;
+    } else {
+      // Create new user
+      return this.createUser(user);
+    }
   }
 
   // Category operations
@@ -145,7 +171,7 @@ export class MemStorage implements IStorage {
     return Array.from(this.categories.values());
   }
 
-  async getCategoriesByUserId(userId: number): Promise<Category[]> {
+  async getCategoriesByUserId(userId: string): Promise<Category[]> {
     return Array.from(this.categories.values()).filter(category => category.userId === userId);
   }
 

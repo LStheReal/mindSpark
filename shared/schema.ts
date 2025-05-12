@@ -31,7 +31,7 @@ export const users = pgTable("users", {
 export const categories = pgTable("categories", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
-  userId: integer("user_id").notNull(),
+  userId: text("user_id").notNull(), // Changed to text to match user ID type
   color: text("color").default("#3B82F6"),
   createdAt: timestamp("created_at").defaultNow(),
 });
@@ -40,7 +40,7 @@ export const flashcardSets = pgTable("flashcard_sets", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
   description: text("description"),
-  userId: integer("user_id").notNull(),
+  userId: text("user_id").notNull(), // Changed to text to match user ID type
   categoryId: integer("category_id"),
   isPublic: boolean("is_public").default(false),
   color: text("color").default("#3B82F6"),
@@ -58,7 +58,7 @@ export const flashcards = pgTable("flashcards", {
 
 export const studyProgress = pgTable("study_progress", {
   id: serial("id").primaryKey(),
-  userId: integer("user_id").notNull(),
+  userId: text("user_id").notNull(), // Changed to text to match user ID type
   flashcardId: integer("flashcard_id").notNull(),
   status: text("status").default("new"), // "new", "learning", "known"
   lastStudied: timestamp("last_studied").defaultNow(),
@@ -69,7 +69,7 @@ export const classrooms = pgTable("classrooms", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
   description: text("description"),
-  ownerId: integer("owner_id").notNull(),
+  ownerId: text("owner_id").notNull(), // Changed to text to match user ID type
   inviteCode: text("invite_code").notNull(),
   createdAt: timestamp("created_at").defaultNow(),
 });
@@ -77,7 +77,7 @@ export const classrooms = pgTable("classrooms", {
 export const classroomMembers = pgTable("classroom_members", {
   id: serial("id").primaryKey(),
   classroomId: integer("classroom_id").notNull(),
-  userId: integer("user_id").notNull(),
+  userId: text("user_id").notNull(), // Changed to text to match user ID type
   role: text("role").default("student"), // "student", "teacher"
   joinedAt: timestamp("joined_at").defaultNow(),
 });
@@ -93,7 +93,7 @@ export const quizzes = pgTable("quizzes", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
   setId: integer("set_id").notNull(),
-  userId: integer("user_id").notNull(),
+  userId: text("user_id").notNull(), // Changed to text to match user ID type
   quizType: text("quiz_type").default("multiple_choice"), // "multiple_choice", "fill_blank", "matching", "mixed"
   questions: json("questions").notNull(),
   createdAt: timestamp("created_at").defaultNow(),
@@ -102,7 +102,7 @@ export const quizzes = pgTable("quizzes", {
 export const quizResults = pgTable("quiz_results", {
   id: serial("id").primaryKey(),
   quizId: integer("quiz_id").notNull(),
-  userId: integer("user_id").notNull(),
+  userId: text("user_id").notNull(), // Changed to text to match user ID type
   score: integer("score").notNull(),
   maxScore: integer("max_score").notNull(),
   answers: json("answers"),
