@@ -191,7 +191,7 @@ export class MemStorage implements IStorage {
     return Array.from(this.flashcardSets.values());
   }
 
-  async getFlashcardSetsByUserId(userId: number): Promise<FlashcardSet[]> {
+  async getFlashcardSetsByUserId(userId: string): Promise<FlashcardSet[]> {
     return Array.from(this.flashcardSets.values()).filter(set => set.userId === userId);
   }
 
@@ -283,7 +283,7 @@ export class MemStorage implements IStorage {
   }
 
   // Study progress operations
-  async getStudyProgressByUserId(userId: number): Promise<StudyProgress[]> {
+  async getStudyProgressByUserId(userId: string): Promise<StudyProgress[]> {
     return Array.from(this.studyProgresses.values()).filter(progress => progress.userId === userId);
   }
 
@@ -319,7 +319,7 @@ export class MemStorage implements IStorage {
     return Array.from(this.classrooms.values());
   }
 
-  async getClassroomsByUserId(userId: number): Promise<Classroom[]> {
+  async getClassroomsByUserId(userId: string): Promise<Classroom[]> {
     // Get classrooms where user is a member
     const memberClassroomIds = Array.from(this.classroomMembers.values())
       .filter(member => member.userId === userId)
@@ -393,7 +393,7 @@ export class MemStorage implements IStorage {
     return newQuiz;
   }
 
-  async getQuizzesByUserId(userId: number): Promise<Quiz[]> {
+  async getQuizzesByUserId(userId: string): Promise<Quiz[]> {
     return Array.from(this.quizzes.values()).filter(quiz => quiz.userId === userId);
   }
 
@@ -413,7 +413,7 @@ export class MemStorage implements IStorage {
     return newResult;
   }
 
-  async getQuizResultsByUserId(userId: number): Promise<QuizResult[]> {
+  async getQuizResultsByUserId(userId: string): Promise<QuizResult[]> {
     return Array.from(this.quizResults.values()).filter(result => result.userId === userId);
   }
 
